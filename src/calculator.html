@@ -1,0 +1,112 @@
+<!-- calculator.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hexadecimal Converter</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-family: 'Arial', sans-serif;
+            }
+            #outputBox {
+                width: 80%;
+                height: 100px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            #inputContainer {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            #inputField {
+                flex: 1;
+                margin-right: 10px;
+                padding: 5px;
+                font-size: 16px;
+            }
+            #typeDropdown {
+                flex: 1;
+                padding: 5px;
+                font-size: 14px;
+            }
+            button {
+                padding: 5px;
+                margin: 5px;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="outputBox"></div>
+        <div id="inputContainer">
+            <input type="text" id="inputField" placeholder="Enter text or number">
+            <select id="typeDropdown">
+                <option value="stringToHex">String -> Hex</option>
+                <option value="intToHex">Int -> Hex</option>
+                <option value="rgbToHex">RGB -> Hex</option>
+                <option value="hexToString">Hex -> String</option>
+                <option value="hexToInt">Hex -> Int</option>
+                <option value="hexToRgb">Hex -> RGB</option>
+                <option value="colorPickerToHex">Color Picker -> Hex</option>
+            </select>
+            <button onclick="convert()">Convert</button>
+        </div>
+
+        <script>
+            let currentConverter = stringToHexConversion; // Default converter
+
+            function convert() {
+                const input = document.getElementById('inputField').value;
+                updateOutput(currentConverter(input));
+            }
+
+            function updateOutput(output) {
+                document.getElementById('outputBox').innerText = output;
+            }
+
+            function setConverter() {
+                const selectedConverter = document.getElementById('typeDropdown').value;
+                switch (selectedConverter) {
+                    case 'stringToHex':
+                        currentConverter = stringToHexConversion;
+                        break;
+                    case 'intToHex':
+                        currentConverter = intToHexConversion;
+                        break;
+                    case 'rgbToHex':
+                        currentConverter = rgbToHexConversion;
+                        break;
+                    case 'hexToString':
+                        currentConverter = hexToStringConversion;
+                        break;
+                    case 'hexToInt':
+                        currentConverter = hexToIntConversion;
+                        break;
+                    case 'hexToRgb':
+                        currentConverter = hexToRgbConversion;
+                        break;
+                    case 'colorPickerToHex':
+                        currentConverter = colorPickerToHexConversion;
+                        break;
+                    default:
+                        currentConverter = null;
+                }
+            }
+
+            document.getElementById('typeDropdown').addEventListener('change', setConverter);
+            setConverter(); // Set the initial converter
+        </script>
+    </body>
+</html>
